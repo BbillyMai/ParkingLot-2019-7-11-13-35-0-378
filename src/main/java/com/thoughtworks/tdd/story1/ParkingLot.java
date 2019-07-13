@@ -12,9 +12,9 @@ public class ParkingLot implements ParkAndFetchCar {
     }
 
     @Override
-    public Ticket park(Car car) {
-        if (capacity < cars.size()) {
-            return null;
+    public Ticket park(Car car) throws Exception{
+        if (capacity <= cars.size()) {
+            throw new Exception("Not enough position.");
         }
         Ticket ticket = new Ticket();
         cars.put(ticket, car);
@@ -22,10 +22,19 @@ public class ParkingLot implements ParkAndFetchCar {
     }
 
     @Override
-    public Car fetch(Ticket ticket) {
+    public Car fetch(Ticket ticket) throws Exception{
         if (ticket == null) {
-            return null;
+            throw new Exception("Unrecognized parking ticket.");
         }
         return cars.remove(ticket);
+    }
+
+    @Override
+    public Car fetch() throws Exception{
+        throw new Exception("Please provide your parking ticket.");
+    }
+
+    public Map<Ticket,Car> getCars(){
+        return cars;
     }
 }

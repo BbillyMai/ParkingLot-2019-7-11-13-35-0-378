@@ -8,12 +8,17 @@ public class ParkingBoy implements ParkAndFetchCar {
         this.parkingLot = parkingLot;
     }
     @Override
-    public Ticket park(Car car) {
+    public Ticket park(Car car) throws Exception{
         return parkingLot.park(car);
     }
 
     @Override
-    public Car fetch(Ticket ticket) {
+    public Car fetch(Ticket ticket) throws Exception{
         return parkingLot.fetch(ticket);
+    }
+
+    @Override
+    public Car fetch() throws Exception{
+        throw new Exception("Please provide your parking ticket.");
     }
 }
