@@ -13,7 +13,7 @@ public class ParkingLot implements ParkAndFetchCar {
 
     @Override
     public Ticket park(Car car) throws Exception{
-        if (capacity <= cars.size()) {
+        if (isFull()) {
             throw new Exception("Not enough position.");
         }
         Ticket ticket = new Ticket();
@@ -32,6 +32,13 @@ public class ParkingLot implements ParkAndFetchCar {
     @Override
     public Car fetch() throws Exception{
         throw new Exception("Please provide your parking ticket.");
+    }
+
+    public boolean isFull(){
+        if (capacity <= cars.size()) {
+            return true;
+        }
+        return false;
     }
 
     public Map<Ticket,Car> getCars(){
