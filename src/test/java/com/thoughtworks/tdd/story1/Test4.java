@@ -12,10 +12,8 @@ public class Test4 {
     public void should_park_car_to_right_position_when_smart_boy_park_car_given_park_car() throws Exception{
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(10);
-        List<ParkingLot> parkingLots = new ArrayList<>();
-        parkingLots.add(parkingLot1);
-        parkingLots.add(parkingLot2);
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot1,parkingLot2);
 
         smartParkingBoy.park(new Car());
 

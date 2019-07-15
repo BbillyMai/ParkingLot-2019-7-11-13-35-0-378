@@ -1,15 +1,15 @@
 package com.thoughtworks.tdd.story1;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SuperSmartParkingBoy extends Parker {
 
-    private List<ParkingLot> parkingLots = new ArrayList<>();
+    private List<ParkingLot> parkingLots;
 
-    public SuperSmartParkingBoy(List<ParkingLot> parkingLots) {
+    public SuperSmartParkingBoy(ParkingLot... parkingLots) {
         super(parkingLots);
-        this.parkingLots = parkingLots;
+        this.parkingLots = Arrays.asList(parkingLots);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.thoughtworks.tdd.story1;
 
 import com.thoughtworks.tdd.story1.Exception.NotEnoughPositionException;
+import com.thoughtworks.tdd.story1.Exception.NotProvideTicketException;
 import com.thoughtworks.tdd.story1.Exception.UnrecognizedParkingTicketException;
 import org.junit.jupiter.api.Test;
 
@@ -16,10 +17,8 @@ public class Test1 {
     public void should_customer_fetch_car_when_customer_fetch_car_given_boy_park_car() throws Exception {
 
         ParkingLot parkingLot = new ParkingLot(1);
-        List<ParkingLot> parkingLots = new ArrayList<>();
-        parkingLots.add(parkingLot);
         Car car = new Car();
-        ParkingBoy boy = new ParkingBoy(parkingLots);
+        ParkingBoy boy = new ParkingBoy(parkingLot);
 
         // given
         Ticket ticket = boy.park(car);
@@ -33,9 +32,7 @@ public class Test1 {
     public void should_fetch_right_car_when_boy_fetch_car_given_correspond_ticket() throws Exception {
 
         ParkingLot parkingLot = new ParkingLot(2);
-        List<ParkingLot> parkingLots = new ArrayList<>();
-        parkingLots.add(parkingLot);
-        ParkingBoy boy = new ParkingBoy(parkingLots);
+        ParkingBoy boy = new ParkingBoy(parkingLot);
         Car car1 = new Car();
         Car car2 = new Car();
 
@@ -54,14 +51,12 @@ public class Test1 {
     void should_not_fetch_car_when_fetch_car_given_wrong_ticket() {
 
         ParkingLot parkingLot = new ParkingLot(1);
-        List<ParkingLot> parkingLots = new ArrayList<>();
-        parkingLots.add(parkingLot);
-        ParkingBoy boy = new ParkingBoy(parkingLots);
+        ParkingBoy boy = new ParkingBoy(parkingLot);
 
 
         Ticket wrongTicket = null;
 
-        assertThrows(UnrecognizedParkingTicketException.class, () -> boy.fetch(wrongTicket));
+        assertThrows(NotProvideTicketException.class, () -> boy.fetch(wrongTicket));
 
 
     }
@@ -70,9 +65,7 @@ public class Test1 {
     void should_not_fetch_car_when_fetch_car_given_used_ticket() throws Exception {
 
         ParkingLot parkingLot = new ParkingLot(1);
-        List<ParkingLot> parkingLots = new ArrayList<>();
-        parkingLots.add(parkingLot);
-        ParkingBoy boy = new ParkingBoy(parkingLots);
+        ParkingBoy boy = new ParkingBoy(parkingLot);
         Car car = new Car();
 
         Ticket ticket = boy.park(car);
@@ -85,9 +78,7 @@ public class Test1 {
     void should_not_park_car_and_no_ticket_when_parkingLot_full_given_park_car() throws Exception {
 
         ParkingLot parkingLot = new ParkingLot(10);
-        List<ParkingLot> parkingLots = new ArrayList<>();
-        parkingLots.add(parkingLot);
-        ParkingBoy boy = new ParkingBoy(parkingLots);
+        ParkingBoy boy = new ParkingBoy(parkingLot);
 
         for (int i = 0; i < 10; i++) {
             Car car = new Car();

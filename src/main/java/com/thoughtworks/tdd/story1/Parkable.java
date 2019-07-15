@@ -8,5 +8,5 @@ public interface Parkable {
 
     boolean isFull();
 
-    boolean containsTicket();
+    boolean containsTicket(Ticket ticket);
 }

@@ -13,9 +13,7 @@ public class ParkingLot implements Parkable {
 
     @Override
     public Ticket park(Car car) throws Exception {
-        if (isFull()) {
-            throw new Exception("Not enough position.");
-        }
+
         Ticket ticket = new Ticket();
         cars.put(ticket, car);
         return ticket;
@@ -23,19 +21,18 @@ public class ParkingLot implements Parkable {
 
     @Override
     public Car fetch(Ticket ticket) throws Exception {
-        if (ticket == null) {
-            throw new Exception("Unrecognized parking ticket.");
-        }
         return cars.remove(ticket);
     }
 
-    @Override
-    public Car fetch() throws Exception {
-        throw new Exception("Please provide your parking ticket.");
-    }
+
 
     public boolean isFull() {
         return capacity <= cars.size();
+    }
+
+    @Override
+    public boolean containsTicket(Ticket ticket) {
+        return cars.containsKey(ticket);
     }
 
     public int getFreeCapacity() {

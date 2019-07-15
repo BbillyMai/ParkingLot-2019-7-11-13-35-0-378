@@ -4,15 +4,16 @@ import com.thoughtworks.tdd.story1.Exception.NotEnoughPositionException;
 import com.thoughtworks.tdd.story1.Exception.NotProvideTicketException;
 import com.thoughtworks.tdd.story1.Exception.UnrecognizedParkingTicketException;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ParkingBoy extends Parker {
 
     private List<ParkingLot> parkingLots;
 
-    public ParkingBoy(List<ParkingLot> parkingLots) {
+    public ParkingBoy(ParkingLot... parkingLots) {
         super(parkingLots);
-        this.parkingLots = parkingLots;
+        this.parkingLots = Arrays.asList(parkingLots);
     }
 
     @Override
@@ -23,19 +24,6 @@ public class ParkingBoy extends Parker {
             }
         }
         throw new NotEnoughPositionException();
-    }
-
-    @Override
-    public Car fetch(Ticket ticket) throws Exception {
-        for (ParkingLot parkingLot : parkingLots) {
-            if (parkingLot.getCars().size() > 0) {
-                Car car = parkingLot.fetch(ticket);
-                if (car != null) {
-                    return car;
-                }
-            }
-        }
-        throw new UnrecognizedParkingTicketException();
     }
 
 }

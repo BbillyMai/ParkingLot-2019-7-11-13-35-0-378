@@ -1,67 +1,37 @@
 package com.thoughtworks.tdd.story1;
 
+import com.thoughtworks.tdd.story1.Exception.*;
+
+import java.util.Arrays;
 import java.util.List;
 
-public class ParkingManager extends ParkingBoy {
+public class ParkingManager {
 
-    private List<Parker> parkingBoys;
+    private List<Parkable> parkables;
 
-    private List<ParkingLot> parkingLots;
-
-    public ParkingManager(List<ParkingLot> parkingLots) {
-        super(parkingLots);
-        this.parkingLots = parkingLots;
-    }
-
-    public ParkingManager(List<ParkingLot> parkingLots, List<Parker> parkingBoys) {
-        super(parkingLots);
-        this.parkingBoys = parkingBoys;
-        this.parkingLots = parkingLots;
-    }
-
-    public Ticket selectParkingBoyPark(Car car, Parker selectedBoy) throws Exception {
-        for (Parker parkingBoy : parkingBoys) {
-            if (selectedBoy.equals(parkingBoy)) {
-                return parkingBoy.park(car);
-            }
-        }
-
-        throw new Exception("Not appoint parkingBoy to park car");
-    }
-
-    public Car selectParkingBoyFetchCar(Ticket ticket, Parker selectedBoy) throws Exception {
-
-        for (Parker parkingBoy : parkingBoys) {
-            if (selectedBoy.equals(parkingBoy)) {
-                return parkingBoy.fetch(ticket);
-            }
-        }
-
-        throw new Exception("Not appoint parkingBoy to fetch car");
+    public ParkingManager(Parkable... parkables) {
+        this.parkables = Arrays.asList(parkables);
     }
 
     public Ticket park(Car car) throws Exception {
-        return super.park(car);
+        for (Parkable parkable : parkables) {
+            if (!parkable.isFull()) {
+                return parkable.park(car);
+            }
+        }
+        throw new NotEnoughPositionException();
     }
 
     public Car fetch(Ticket ticket) throws Exception {
-        return super.fetch(ticket);
-    }
-
-    public void addParkingBoy(Parker parkingBoy) {
-        parkingBoys.add(parkingBoy);
-    }
-
-    public void removeParkingBoy(Parker removedParkingBoy) {
-        for (Parker parkingBoy : parkingBoys) {
-            if (removedParkingBoy.equals(parkingBoy)) {
-                parkingBoys.remove(parkingBoy);
-                return;
+        if (ticket == null) {
+            throw new NotProvideTicketException();
+        }
+        for (Parkable parkable : parkables) {
+            if (parkable.containsTicket(ticket)) {
+                return parkable.fetch(ticket);
             }
         }
+        throw new UnrecognizedParkingTicketException();
     }
 
-    public List<Parker> getParkingBoys() {
-        return parkingBoys;
-    }
 }
