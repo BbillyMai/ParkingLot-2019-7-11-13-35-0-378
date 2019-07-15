@@ -1,5 +1,8 @@
 package com.thoughtworks.tdd.story1;
 
+import com.thoughtworks.tdd.story1.Exception.NotEnoughPositionException;
+import com.thoughtworks.tdd.story1.Exception.NotProvideTicketException;
+import com.thoughtworks.tdd.story1.Exception.UnrecognizedParkingTicketException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,14 +21,9 @@ public class Test2 {
         Car car = new Car();
         Ticket ticket = parkingBoy.park(car);
         Car car1 = parkingBoy.fetch(ticket);
-        Exception exception = assertThrows(Exception.class, () -> {
-            parkingBoy.fetch(null);
-        });
-        Exception exception1 = assertThrows(Exception.class, () -> {
-            parkingBoy.fetch(null);
-        });
-        assertEquals("Unrecognized parking ticket.", exception.getMessage());
-        assertEquals("Unrecognized parking ticket.", exception1.getMessage());
+        assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(null));
+        assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(null));
+
     }
 
     @Test
@@ -36,10 +34,7 @@ public class Test2 {
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            parkingBoy.fetch();
-        });
-        assertEquals("Please provide your parking ticket.",exception.getMessage());
+        assertThrows(NotProvideTicketException.class, () -> parkingBoy.fetch());
     }
 
     @Test
@@ -50,9 +45,6 @@ public class Test2 {
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         parkingBoy.park(new Car());
 
-        Exception exception = assertThrows(Exception.class,()->{
-            parkingBoy.park(new Car());
-        });
-        assertEquals("Not enough position.",exception.getMessage());
+        assertThrows(NotEnoughPositionException.class,()-> parkingBoy.park(new Car()));
     }
 }

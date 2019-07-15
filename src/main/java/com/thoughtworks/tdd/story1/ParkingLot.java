@@ -3,7 +3,7 @@ package com.thoughtworks.tdd.story1;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParkingLot implements ParkAndFetchCar {
+public class ParkingLot implements Parkable {
     private int capacity;
     private Map<Ticket, Car> cars = new HashMap<>();
 

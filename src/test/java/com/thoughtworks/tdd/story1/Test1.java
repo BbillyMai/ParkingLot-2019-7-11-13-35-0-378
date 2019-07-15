@@ -1,5 +1,7 @@
 package com.thoughtworks.tdd.story1;
 
+import com.thoughtworks.tdd.story1.Exception.NotEnoughPositionException;
+import com.thoughtworks.tdd.story1.Exception.UnrecognizedParkingTicketException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -49,21 +51,19 @@ public class Test1 {
     }
 
     @Test
-    void should_not_fetch_car_when_fetch_car_given_wrong_ticket() throws Exception {
+    void should_not_fetch_car_when_fetch_car_given_wrong_ticket() {
 
         ParkingLot parkingLot = new ParkingLot(1);
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
         ParkingBoy boy = new ParkingBoy(parkingLots);
 
-        // given
+
         Ticket wrongTicket = null;
-        // when
-        Exception exception = assertThrows(Exception.class,() -> {
-            Car car = boy.fetch(wrongTicket);
-        });
-        // return
-        assertEquals("Unrecognized parking ticket.", exception.getMessage());
+
+        assertThrows(UnrecognizedParkingTicketException.class, () -> boy.fetch(wrongTicket));
+
+
     }
 
     @Test
@@ -74,16 +74,11 @@ public class Test1 {
         parkingLots.add(parkingLot);
         ParkingBoy boy = new ParkingBoy(parkingLots);
         Car car = new Car();
-        // given
+
         Ticket ticket = boy.park(car);
         Car car1 = boy.fetch(ticket);
-        // when
 
-        //return
-        Exception exception = assertThrows(Exception.class, () -> {
-            Car car2 = boy.fetch(ticket);
-        });
-        assertEquals("Unrecognized parking ticket.", exception.getMessage());
+        assertThrows(UnrecognizedParkingTicketException.class, () -> boy.fetch(ticket));
     }
 
     @Test
@@ -100,9 +95,7 @@ public class Test1 {
         }
         Car car11 = new Car();
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            Ticket ticket = boy.park(car11);
-        });
-        assertEquals("Not enough position.", exception.getMessage());
+        assertThrows(NotEnoughPositionException.class, () -> boy.park(car11));
+
     }
 }

@@ -3,7 +3,7 @@ package com.thoughtworks.tdd.story1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmartParkingBoy extends ParkingBoy {
+public class SmartParkingBoy extends Parker {
 
     private List<ParkingLot> parkingLots = new ArrayList<>();
 

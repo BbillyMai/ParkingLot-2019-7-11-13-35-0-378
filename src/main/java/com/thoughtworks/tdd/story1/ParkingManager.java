@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ParkingManager extends ParkingBoy {
 
-    private List<ParkingBoy> parkingBoys;
+    private List<Parker> parkingBoys;
 
     private List<ParkingLot> parkingLots;
 
@@ -13,33 +13,27 @@ public class ParkingManager extends ParkingBoy {
         this.parkingLots = parkingLots;
     }
 
-    public ParkingManager(List<ParkingLot> parkingLots, List<ParkingBoy> parkingBoys) {
+    public ParkingManager(List<ParkingLot> parkingLots, List<Parker> parkingBoys) {
         super(parkingLots);
         this.parkingBoys = parkingBoys;
         this.parkingLots = parkingLots;
     }
 
-    public Ticket selectParkingBoyPark(Car car, ParkingBoy selectedBoy) throws Exception {
-        for (ParkingBoy parkingBoy : parkingBoys) {
+    public Ticket selectParkingBoyPark(Car car, Parker selectedBoy) throws Exception {
+        for (Parker parkingBoy : parkingBoys) {
             if (selectedBoy.equals(parkingBoy)) {
-                if (selectedBoy instanceof SuperSmartParkingBoy) {
-                    return ((SuperSmartParkingBoy) parkingBoy).park(car);
-                } else if (selectedBoy instanceof SmartParkingBoy) {
-                    return ((SmartParkingBoy) parkingBoy).park(car);
-                } else if (selectedBoy instanceof ParkingBoy) {
-                    return ((ParkingBoy) parkingBoy).park(car);
-                }
+                return parkingBoy.park(car);
             }
         }
 
         throw new Exception("Not appoint parkingBoy to park car");
     }
 
-    public Car selectParkingBoyfetchCar(Ticket ticket, ParkingBoy selectedBoy) throws Exception {
+    public Car selectParkingBoyFetchCar(Ticket ticket, Parker selectedBoy) throws Exception {
 
-        for (ParkingBoy parkingBoy : parkingBoys) {
+        for (Parker parkingBoy : parkingBoys) {
             if (selectedBoy.equals(parkingBoy)) {
-                return ((ParkingBoy) parkingBoy).fetch(ticket);
+                return parkingBoy.fetch(ticket);
             }
         }
 
@@ -54,12 +48,12 @@ public class ParkingManager extends ParkingBoy {
         return super.fetch(ticket);
     }
 
-    public void addParkingBoy(ParkingBoy parkingBoy) {
+    public void addParkingBoy(Parker parkingBoy) {
         parkingBoys.add(parkingBoy);
     }
 
-    public void removeParkingBoy(ParkingBoy removedParkingBoy) {
-        for (ParkingBoy parkingBoy : parkingBoys) {
+    public void removeParkingBoy(Parker removedParkingBoy) {
+        for (Parker parkingBoy : parkingBoys) {
             if (removedParkingBoy.equals(parkingBoy)) {
                 parkingBoys.remove(parkingBoy);
                 return;
@@ -67,7 +61,7 @@ public class ParkingManager extends ParkingBoy {
         }
     }
 
-    public List<ParkingBoy> getParkingBoys() {
+    public List<Parker> getParkingBoys() {
         return parkingBoys;
     }
 }

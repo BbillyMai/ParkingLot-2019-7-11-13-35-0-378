@@ -1,5 +1,6 @@
 package com.thoughtworks.tdd.story1;
 
+import com.thoughtworks.tdd.story1.Exception.UnrecognizedParkingTicketException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class Test6 {
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
         SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLots);
 
-        List<ParkingBoy> parkingBoys = new ArrayList<>();
+        List<Parker> parkingBoys = new ArrayList<>();
         parkingBoys.add(parkingBoy);
         parkingBoys.add(smartParkingBoy);
         parkingBoys.add(superSmartParkingBoy);
@@ -48,10 +49,10 @@ public class Test6 {
         assertEquals(3, parkingLot2.getCars().size());
 
         // test manager appoint parkingBoy fetch car
-        Car car1 = manager.selectParkingBoyfetchCar(ticket1, smartParkingBoy);
-        Car car2 = manager.selectParkingBoyfetchCar(ticket2, parkingBoy);
-        Car car3 = manager.selectParkingBoyfetchCar(ticket3, parkingBoy);
-        Car car4 = manager.selectParkingBoyfetchCar(ticket4, superSmartParkingBoy);
+        Car car1 = manager.selectParkingBoyFetchCar(ticket1, smartParkingBoy);
+        Car car2 = manager.selectParkingBoyFetchCar(ticket2, parkingBoy);
+        Car car3 = manager.selectParkingBoyFetchCar(ticket3, parkingBoy);
+        Car car4 = manager.selectParkingBoyFetchCar(ticket4, superSmartParkingBoy);
 
         assertEquals(parkingBoyCar, car1);
         assertEquals(smartParkingBoyCar, car2);
@@ -78,13 +79,11 @@ public class Test6 {
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot1);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
-        List<ParkingBoy> parkingBoys = new ArrayList<>();
+        List<Parker> parkingBoys = new ArrayList<>();
         parkingBoys.add(parkingBoy);
         ParkingManager parkingManager = new ParkingManager(parkingLots, parkingBoys);
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            parkingManager.selectParkingBoyfetchCar(new Ticket(), parkingBoy);
-        });
-        assertEquals("Unrecognized parking ticket.",exception.getMessage());
+       assertThrows(UnrecognizedParkingTicketException.class, () -> parkingManager.selectParkingBoyFetchCar(new Ticket(), parkingBoy));
+
     }
 }
